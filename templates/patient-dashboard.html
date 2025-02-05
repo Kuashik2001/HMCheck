@@ -1,0 +1,299 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <h2 class="text-center" th:text="${patientMessage}"></h2>
+        <div class="text-center mt-4">
+            <a href="/patient/logout" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <div class="container">
+            <a class="navbar-brand text-light" href="#">Patient Dashboard</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="btn btn-outline-light" href="/patient/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <h2 class="text-center">Available Doctors</h2>
+        <table class="table table-striped mt-4">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Date of Joining</th>
+                    <th>Experience</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="doctor : ${doctors}">
+                    <td th:text="${doctor.name}"></td>
+                    <td th:text="${doctor.specialization}"></td>
+                    <td th:text="${doctor.dateOfJoining}"></td>
+                    <td th:text="${doctor.experience} + ' years'"></td>
+                    <td>
+                        <button class="btn btn-success btn-sm" data-bs-toggle="modal" 
+                                th:attr="data-bs-target='#bookAppointmentModal-' + ${doctor.id}">Book Appointment</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        Appointment Booking Modal
+        <div th:each="doctor : ${doctors}">
+            <div class="modal fade" th:id="'bookAppointmentModal-' + ${doctor.id}" tabindex="-1" 
+                 aria-labelledby="bookAppointmentModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="bookAppointmentModalLabel">Book Appointment</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/appointment/book" method="post">
+                                <input type="hidden" name="doctorName" th:value="${doctor.name}">
+                                <input type="hidden" name="doctorEmail" th:value="${doctor.email}">
+                                <div class="mb-3">
+                                    <label class="form-label">Patient Name</label>
+                                    <input type="text" class="form-control" name="patientName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Age</label>
+                                    <input type="number" class="form-control" name="age" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Blood Group</label>
+                                    <input type="text" class="form-control" name="bloodGroup" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Disease</label>
+                                    <input type="text" class="form-control" name="disease" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Appointment Date</label>
+                                    <input type="date" class="form-control" name="appointmentDate" required>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Book Appointment</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+ -->
+ 
+ 
+ 
+ <!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-success">
+        <div class="container">
+            <a class="navbar-brand text-light" href="#">Doctor Dashboard</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="btn btn-outline-light" href="/doctor/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <h2 class="text-center">Appointments</h2>
+        <table class="table table-striped mt-4">
+            <thead class="table-dark">
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Age</th>
+                    <th>Blood Group</th>
+                    <th>Disease</th>
+                    <th>Appointment Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="appointment : ${appointments}">
+                    <td th:text="${appointment.patientName}"></td>
+                    <td th:text="${appointment.age}"></td>
+                    <td th:text="${appointment.bloodGroup}"></td>
+                    <td th:text="${appointment.disease}"></td>
+                    <td th:text="${appointment.appointmentDate}"></td>
+                    <td th:text="${appointment.status}"></td>
+                    <td>
+                        <form action="/doctor/updateStatus" method="post">
+                            <input type="hidden" name="id" th:value="${appointment.id}">
+                            <select name="status" class="form-select">
+                                <option value="Pending">Pending</option>
+                                <option value="Approved">Approve</option>
+                                <option value="Rejected">Reject</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-sm mt-2">Update</button>
+                        </form>
+                        <a th:href="@{/doctor/deleteAppointment(id=${appointment.id})}" class="btn btn-danger btn-sm mt-2"
+                           onclick="return confirm('Are you sure?');">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> used
+  -->
+  
+  
+  
+  <!-- Working -->
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <h2 class="text-center">Available Doctors</h2>
+
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Experience</th>
+                    <th>Book Appointment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <tr th:each="doctor : ${doctors}">
+                    <td th:text="${doctor.name}"></td>
+                    <td th:text="${doctor.specialization}"></td>
+                    <td th:text="${doctor.experience} + ' years'"></td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" th:attr="data-bs-target='#bookAppointmentModal-' + ${doctor.id}">
+                            Book Appointment
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    Appointment Booking Modal
+    <div th:each="doctor : ${doctors}">
+        <div class="modal fade" th:id="'bookAppointmentModal-' + ${doctor.id}" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Book Appointment with Dr. <span th:text="${doctor.name}"></span></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form action="/appointment/book" method="post">
+                        <div class="modal-body">
+                            <input type="hidden" name="doctorEmail" th:value="${doctor.email}">
+                            <div class="mb-3">
+                                <label for="disease" class="form-label">Disease</label>
+                                <input type="text" class="form-control" name="disease" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="appointmentDate" class="form-label">Date of Appointment</label>
+                                <input type="date" class="form-control" name="appointmentDate" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Book Appointment</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    
+    <tr th:each="doctor : ${doctors}">
+    <td th:text="${doctor.name}"></td>
+    <td th:text="${doctor.specialization}"></td>
+    <td th:text="${doctor.experience} + ' years'"></td>
+    <td>
+        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" th:attr="data-bs-target='#bookAppointmentModal-' + ${doctor.id}">
+            Book Appointment
+        </button>
+    </td>
+</tr>
+
+<!-- Appointment Booking Modal -->
+<div th:each="doctor : ${doctors}">
+    <div class="modal fade" th:id="'bookAppointmentModal-' + ${doctor.id}" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/appointment/book" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Book Appointment with Dr. <span th:text="${doctor.name}"></span></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="doctorId" th:value="${doctor.id}">
+                        <label for="patientName" class="form-label">Patient Name</label>
+                        <input type="text" class="form-control" name="patientName" required>
+                        <label for="bloodGroup" class="form-label">Blood Group</label>
+                        <input type="text" class="form-control" name="bloodGroup" required>
+                        <label for="age" class="form-label">Age</label>
+                        <input type="number" class="form-control" name="age" required>
+                        <label for="disease" class="form-label">Problem</label>
+                        <input type="text" class="form-control" name="disease" required>
+                        <label for="appointmentDate" class="form-label">Date of Appointment</label>
+                        <input type="date" class="form-control" name="appointmentDate" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Book Appointment</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
